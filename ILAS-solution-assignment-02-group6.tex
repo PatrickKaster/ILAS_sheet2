@@ -32,7 +32,7 @@
 \end{problem}
 \begin{solution}
 	\begin{enumerate}[(i)]	
-		\item	
+		\item \label{task1}
 		\begin{alignat}{1}
 			H(X) = H\left(p_{1}\ldots p_{n}\right) = & \sum_{i=1}^{n}-p_{i}\log_{2}p_{i} \nonumber \\ 
 				 = & \sum_{i=1}^{n}p_{i}\log_{2}\frac{1}{p_{i}} \nonumber \\
@@ -44,7 +44,37 @@
 		We used the well known concavity of the logarithm in applying Jensen's inequality in (\ref{eq:concavelog}).
 		
 		\item
+		\begin{alignat*}{1}
+			\mathrm{Gain}\left(X\vert Y\right)     = & H\left(X\right)-H\left(X|Y\right)\\
+												   = &\sum_{X}-P\left(X\right)\log_{2}P\left(X\right)-\sum_{v\in\mathrm{value}(Y)}P\left(Y=v\right)H\left(X\vert Y=v\right)\\
+											       = & \sum_{X}-P\left(X\right)\log_{2}P\left(X\right)\\
+											       - & \sum_{v\in\mathrm{value}(Y)}P\left(Y=v\right)\sum_{X}\left(-P\left(X\vert Y=v\right)\log_{2}P\left(X\vert Y=v\right)\right)\\
+		\end{alignat*}
 		
+		\begin{alignat*}{1}
+			\Leftrightarrow\mathrm{-Gain}\left(X\vert Y\right) = & \sum_{X}P\left(X\right)\log_{2}P\left(X\right)\\
+															   - & \sum_{v\in\mathrm{value}(Y)}P\left(Y=v\right)\sum_{X}P\left(X\vert Y=v\right)\log_{2}P\left(X\vert Y=v\right)\\
+ 												   = & \sum_{X}\sum_{v\in\mathrm{value}(Y)}P\left(X,Y=v\right)\log_{2}P\left(X\right)\\
+ 												   - & \sum_{v\in\mathrm{value}(Y)}\sum_{X}P\left(Y=v\right)P\left(X\vert Y=v\right)\log_{2}P\left(X\vert Y=v\right)\\
+												   = & \sum_{X}\sum_{v\in\mathrm{value}(Y)}P\left(X,Y=v\right)\log_{2}P\left(X\right)\\
+												   - & \sum_{v\in\mathrm{value}(Y)}\sum_{X}P\left(X,Y=v\right)\log_{2}P\left(X\vert Y=v\right)\\
+		\end{alignat*}
+		
+		\begin{alignat}{1}
+												   = & \sum_{X}\sum_{v\in\mathrm{value}(Y)}P\left(X,Y=v\right)\left(\log_{2}P\left(X\right)-\log_{2}P\left(X\vert Y=v\right)\right) \nonumber\\
+												   = & \sum_{X}\sum_{v\in\mathrm{value}(Y)}P\left(X,Y=v\right)\left(\log_{2}\left(\frac{P\left(X\right)}{P\left(X\vert Y=v\right)}\right)\right)\nonumber\\
+												   = & \sum_{X}\sum_{v\in\mathrm{value}(Y)}P(Y=v)P\left(X|Y=v\right)\left(\log_{2}\left(\frac{P\left(X\right)}{P\left(X\vert Y=v\right)}\right)\right)\nonumber\\
+												   = & \sum_{v\in\mathrm{value}(Y)}P(Y=v)\sum_{X}P\left(X|Y=v\right)\left(\log_{2}\left(\frac{P\left(X\right)}{P\left(X\vert Y=v\right)}\right)\right)\label{eq:J1}\\
+												\leq & \sum_{v\in\mathrm{value}(Y)}P(Y=v)\left(\log_{2}\left(\sum_{X}\frac{P\left(X\right)P\left(X|Y=v\right)}{P\left(X\vert Y=v\right)}\right)\right)\label{eq:J2}\\
+												\leq & \log_{2}\left(\sum_{v\in\mathrm{value}(Y)}\sum_{X}\frac{P\left(X\right)P\left(X|Y=v\right)P(Y=v)}{P\left(X\vert Y=v\right)}\right)\label{eq:J3}\\
+												   = & \log_{2}\left(\sum_{v\in\mathrm{value}(Y)}P(Y=v)\sum_{X}P\left(X\right)\right)\nonumber \\
+ 												\leq & \log_{2}\left(\sum_{v\in\mathrm{value}(Y)}P(Y=v)\right)\nonumber\\
+												   = & \log_{2}\left(1\right)=0 \nonumber
+		\end{alignat}
+		
+		So we conclude: \[ \mathrm{-Gain}\left(X\vert Y\right) \leq \log_{2}\left(1\right) = 0 \Leftrightarrow \mathrm{Gain}\left(X\vert Y\right) \geq 0 \]
+		We used Jensen's inequality from task (\ref{task1}) from equation (\ref{eq:J1}) to (\ref{eq:J2}) and again from (\ref{eq:J2}) to (\ref{eq:J3}).
+
 	\end{enumerate}
 	
 \end{solution}
