@@ -1,0 +1,53 @@
+% HMC Math dept HW template example
+% v0.04 by Eric J. Malm, 10 Mar 2005
+\documentclass[10pt,a4paper,boxed]{hmcpset}
+
+% set 1-inch margins in the document
+% \usepackage[margin=1in]{geometry}
+\usepackage{enumerate}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+
+% include this if you want to import graphics files with /includegraphics
+\usepackage{graphicx}
+
+\renewcommand*{\familydefault}{\sfdefault}
+\newcommand{\vect}[1]{\mathbf{#1}}
+
+
+% info for header block in upper right hand corner
+\name{Group 6: Timm Behner, Philipp Bruckschen, Patrick Kaster, Markus Schwalb}
+\class{MA-INF 4111 - Intelligent Learning and Analysis Systems: Machine Learning}
+\assignment{Exercise Sheet 2}
+% \duedate{09/03/2004}
+
+\begin{document}
+
+%\problemlist{Rudin 3.5, Saff and Snider 1.5.11, 1.7.5ad,\\Dummit and Foote 1.1.25, Logan 1.8.6}
+
+\begin{problem}[3. Properties of the Entropy]
+\end{problem}
+\begin{solution}
+	\begin{enumerate}[(i)]	
+		\item	
+		\begin{alignat}{1}
+			H(X) = H\left(p_{1}\ldots p_{n}\right) = & \sum_{i=1}^{n}-p_{i}\log_{2}p_{i} \nonumber \\ 
+				 = & \sum_{i=1}^{n}p_{i}\log_{2}\frac{1}{p_{i}} \nonumber \\
+				 = & \mathbb{E}\left[\log_{2}\left(X\right)\right]\leq\log_{2}\left(\mathbb{E}\left[X\right]\right) \label{eq:concavelog} \\
+				 = & \log_{2}\left(\sum_{i=1}^{n}p_{i}\frac{1}{p_{i}}\right) \nonumber \\
+				 = & \log_{2}n \nonumber
+		\end{alignat}
+		
+		We used the well known concavity of the logarithm in applying Jensen's inequality in (\ref{eq:concavelog}).
+		
+		\item
+		
+	\end{enumerate}
+	
+\end{solution}
+
+
+\end{document}
