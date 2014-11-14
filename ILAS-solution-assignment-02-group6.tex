@@ -1,32 +1,214 @@
-% HMC Math dept HW template example
-% v0.04 by Eric J. Malm, 10 Mar 2005
-\documentclass[10pt,a4paper,boxed]{hmcpset}
+	% HMC Math dept HW template example
+	% v0.04 by Eric J. Malm, 10 Mar 2005
+	\documentclass[10pt,a4paper,boxed]{hmcpset}
 
-% set 1-inch margins in the document
-% \usepackage[margin=1in]{geometry}
-\usepackage{enumerate}
-\usepackage{tikz}
-\usetikzlibrary{positioning}
-\usepackage{pgfplots}
-\usepackage{amsmath}
-\usepackage{amsfonts}
-\usepackage{amssymb}
+	% set 1-inch margins in the document
+	% \usepackage[margin=1in]{geometry}
+	\usepackage{enumerate}
+	\usepackage{tikz}
+	\usetikzlibrary{positioning}
+	\usepackage{pgfplots}
+	\usepackage{amsmath}
+	\usepackage{amsfonts}
+	\usepackage{amssymb}
 
-% include this if you want to import graphics files with /includegraphics
-\usepackage{graphicx}
+	% include this if you want to import graphics files with /includegraphics
+	\usepackage{graphicx}
 
-\renewcommand*{\familydefault}{\sfdefault}
-\newcommand{\vect}[1]{\mathbf{#1}}
+	\renewcommand*{\familydefault}{\sfdefault}
+	\newcommand{\vect}[1]{\mathbf{#1}}
+	\DeclareMathOperator{\gain}{Gain}
+	\DeclareMathOperator{\entropy}{H}
+	\DeclareMathOperator{\prob}{P}
 
-\tikzset{node distance=2cm, inner/.style={draw,circle}, leaf/.style={draw,rectangle}}
+	\tikzset{node distance=2cm, inner/.style={draw,circle}, leaf/.style={draw,rectangle}}
 
-% info for header block in upper right hand corner
-\name{Group 6: Timm Behner, Philipp Bruckschen, Patrick Kaster, Markus Schwalb}
-\class{MA-INF 4111 - Intelligent Learning and Analysis Systems: Machine Learning}
-\assignment{Exercise Sheet 2}
-% \duedate{09/03/2004}
+	% info for header block in upper right hand corner
+	\name{Group 6: Timm Behner, Philipp Bruckschen, Patrick Kaster, Markus Schwalb}
+	\class{MA-INF 4111 - Intelligent Learning and Analysis Systems: Machine Learning}
+	\assignment{Exercise Sheet 2}
+	% \duedate{09/03/2004}
 
-\begin{document}
+	\begin{document}
+
+	\begin{problem}[1. TDIDT]
+	\end{problem}
+	\begin{solution}
+	Begin with the emtpy decision tree and search for the best split in all
+	attributes.
+
+	Entropy of examples $\entropy(X) = 0.994$
+	\begin{description}
+		\item[Wind]\hfill
+
+			\begin{tabular}[H]{l|ll}
+				& + & - \\ \hline
+				Weak & 3 & 2 \\
+				Strong & 3 & 3 \\
+			\end{tabular}
+			\begin{align}
+				\gain(X|\mathrm{Wind}) &= \entropy(X) - \sum_{w \in \left\{ \mathrm{Weak}, \neg\mathrm{Weak}  \right\} } \prob(\mathrm{Wind}=w) \entropy(X|\mathrm{Wind}=w) \\
+															 &= 0.0072
+			\end{align}
+
+		\item[Temperature] \hfill \\
+			Compute the best splitting test for this attribute\\
+				\begin{tabular}[H]{ll}
+					Value & Outcome \\
+					7&+\\
+					8&+\\
+					10&+\\
+					11&+\\
+					20&+\\
+					21&-\\
+					23&+\\
+					23&-\\
+					31&-\\
+					32&-\\
+					34&-\\
+				\end{tabular}
+
+			\begin{tabular}[H]{l|ll}
+				& + & - \\ \hline
+				$20.5 > $		& 5 & 0 \\
+				$20.5 \leq$ & 1 & 5 \\
+			\end{tabular}
+			$\entropy(X|\mathrm{Temp}<20.5) = 0$
+			$\entropy(X|\mathrm{Temp}\geq 20.5) = 0.65$
+
+			\begin{tabular}[H]{l|ll}
+				& + & - \\ \hline
+				$22 > $		& 5 & 1 \\
+				$22 \leq$ & 1 & 4 \\
+			\end{tabular}
+			$\entropy(X|\mathrm{Temp}<22) = 0.65$
+			$\entropy(X|\mathrm{Temp}\geq 22) = 0.7219$
+
+			From this follows that the maximum gain for this attribute is 
+			$\gain(X|\mathrm{Temp} \leq 20.5) = 0.6395$
+
+		\item[Outlook]  \hfill \\
+			\begin{tabular}[H]{l|ll}
+				& + & - \\ \hline
+				Sunny				 & 2 & 2 \\
+				$\neg$ Sunny & 4 & 3 \\
+			\end{tabular}
+			$\Rightarrow \gain(X|\mathrm{Outlook}=\mathrm{Sunny}) = 0.0034$
+
+			\begin{tabular}[H]{l|ll}
+				& + & - \\ \hline
+				Overcast				 & 1 & 2 \\
+				$\neg$ Overcast & 5 & 3 \\
+			\end{tabular}
+			$\Rightarrow \gain(X|\mathrm{Outlook}=\mathrm{Overcast}) = 0.0494$
+
+			\begin{tabular}[H]{l|ll}
+				& + & - \\ \hline
+				Rain				 & 3 & 1 \\
+				$\neg$ Rain & 3 & 4 \\
+			\end{tabular}
+			$\Rightarrow \gain(X|\mathrm{Outlook}=\mathrm{Rain}) = 0.072$
+
+			Now check for 
+			\begin{align}
+				\gain(X|\mathrm{Outlook}\in \left\{ \mathrm{Rain},\mathrm{Overcast} \right\} = 0.0035
+			\end{align}
+			From this follows that the maximum information gain for this attribute is 
+			$\Rightarrow \gain(X|\mathrm{Outlook}=\mathrm{Rain}) = 0.072$
+			\end{description}
+			The attribute with the maximum information gain is Temperatur (split with $20.5\leq$)\\[2em]
+			\begin{center}
+				\begin{tikzpicture}
+					\node[inner] (T) {\footnotesize Temp};
+					\node[inner] (Tn) [below right=of T] {?};
+
+					\node[leaf] (L1) [below left=of T] {+};
+
+					\path[draw]
+					(T) -- node[above left] {$<20.5$} (L1)
+					(T) -- node[above right] {$\geq 20.5$} (Tn);
+				\end{tikzpicture}
+			\end{center}
+
+			Search for best attribute to split in $\left\{ \mathrm{Overcast},\mathrm{Wind} \right\}$	
+			\begin{description}
+				\item[Overcast] \hfill \\
+				\begin{tabular}[H]{l|ll}
+					& + & - \\ \hline
+					Sunny				 & 1 & 2 \\
+					$\neg$ Sunny & 0 & 3 \\
+				\end{tabular}
+				$\Rightarrow \gain(X|\mathrm{Outlook}=\mathrm{Sunny}) = 0.1901$
+
+				\begin{tabular}[H]{l|ll}
+					& + & - \\ \hline
+					Overcast				 & 0 & 2 \\
+					$\neg$ Overcast & 1 & 3 \\
+				\end{tabular}
+				$\Rightarrow \gain(X|\mathrm{Outlook}=\mathrm{Overcast}) = 0.1091$
+
+				\begin{tabular}[H]{l|ll}
+					& + & - \\ \hline
+					Rain				 & 0 & 1 \\
+					$\neg$ Rain & 1 & 4 \\
+				\end{tabular}
+				$\Rightarrow \gain(X|\mathrm{Outlook}=\mathrm{Rain}) = 0.0484$
+
+				And $\gain(X|\mathrm{Outlook} \in \left\{ \mathrm{Sunny}, \mathrm{Overcast} \right\}) = 0.0484$
+
+			\item[Wind] \hfill \\
+				\begin{tabular}[H]{l|ll}
+					& + & - \\ \hline
+					Weak				 & 1 & 4 \\
+					$\neg$ Weak & 0 & 1 \\
+				\end{tabular}
+				$\Rightarrow \gain(X|\mathrm{Wind}) = 0.1091$
+
+		\end{description}
+
+		From this follows that the maximum information gain for this node is
+		$\gain(X|\mathrm{Outlook} = \mathrm{Sunny}) = 0.1909$
+			\begin{center}
+			\begin{tikzpicture}
+				\node[inner] (T) {\footnotesize Temp};
+				\node[inner] (O) [below right=of T] {\footnotesize Overcast};
+				\node[inner] (Tn) [below right=of O] {?};
+
+				\node[leaf] (L1) [below left=of T] {+};
+				\node[leaf] (L2) [below left=of O] {-};
+
+				\path[draw]
+				(T) -- node[above left] {$<20.5$} (L1)
+				(T) -- node[above right] {$\geq 20.5$} (O)
+				(O) -- node[above left] {$\neg$ Sunny } (L2)
+				(O) -- node[above right] { Sunny } (Tn);
+			\end{tikzpicture}
+		\end{center}
+
+		Now only the attribute Wind is left.
+		\begin{center}
+			\begin{tikzpicture}
+				\node[inner] (T) {\footnotesize Temp};
+				\node[inner] (O) [below right=of T] {\footnotesize Overcast};
+				\node[inner] (W) [below right=of O] {\footnotesize Wind};
+
+				\node[leaf] (L1) [below left=of T] {+};
+				\node[leaf] (L2) [below left=of O] {-};
+				\node[leaf] (L3) [below left=of W] {-};
+				\node[leaf] (L4) [below right=of W] {+};
+
+				\path[draw]
+				(T) -- node[above left] {$<20.5$} (L1)
+				(T) -- node[above right] {$\geq 20.5$} (O)
+				(O) -- node[above left] {$\neg$ Sunny } (L2)
+				(O) -- node[above right] { Sunny } (W)
+				(W) -- node[above left] { Weak } (L3)
+				(W) -- node[above right] {$\neg$ Weak} (L4);
+			\end{tikzpicture}
+		\end{center}
+		where the left right leaf of the Wind node was classified as positive,
+		because at least half of the examples in this node were positive.
+\end{solution}
 
 %\problemlist{Rudin 3.5, Saff and Snider 1.5.11, 1.7.5ad,\\Dummit and Foote 1.1.25, Logan 1.8.6}
 \begin{problem}[2. Decision Tree Representations of Boolean Functions]
